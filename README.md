@@ -36,6 +36,12 @@ Passwords or SSH keys can be used to connect to internal hosts. The sshpass pack
 apt install sshpass
 ```
 
+To disable host key checking:
+
+```
+export ANSIBLE_HOST_KEY_CHECKING=False
+```
+
 ### Sample Hosts File (/etc/ansible/hosts)
 
 ```yaml
