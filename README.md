@@ -23,6 +23,7 @@ Red team oriented playbooks. (ie install additional persisitance mechanisims)
 | Playbook | Description | Valid Targets |
 | -------- | ----------- | ------------- |
 | sudo-wordle | Configures pam-wordle as a required authentication module for sudo | Debian based Linux |
+| cat | Replace cat executable with a cat | Linux |
 
 ## Ansible
 

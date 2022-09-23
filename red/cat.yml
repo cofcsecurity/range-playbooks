@@ -1,0 +1,12 @@
+- name: Cat
+  hosts: blue_linux
+  tasks:
+    - name: Replace cat
+      become: yes
+      copy:
+        content: |
+          printf " /\_/\ \n"
+          printf "( o o )\n"
+          printf " > ^ < \n"
+        dest: /bin/cat
+        mode: 0731
