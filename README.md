@@ -4,6 +4,14 @@ A collection of Ansible playbooks designed for use with [the range](https://gith
 
 ## Playbooks
 
+### Blue
+
+Blue team oriented playbooks. (ie setup auditd, ufw)
+
+| Playbook | Description | Valid Targets |
+| -------- | ----------- | ------------- |
+| auditd-setup | Installs and enables auditd | Debian based Linux |
+
 ### Gold
 
 Range administration oriented playbooks. (ie configure default users, services)

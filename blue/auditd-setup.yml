@@ -1,0 +1,23 @@
+- name: Auditd Setup
+  hosts: blue_linux
+  tasks:
+    - name: Install auditd
+      become: yes
+      apt:
+        name: 
+          - auditd
+        update_cache: true
+
+    - name: Fetch rules
+      become: yes
+      get_url:
+        url: https://raw.githubusercontent.com/Neo23x0/auditd/master/audit.rules
+        dest: /etc/audit/rules.d/
+        mode: '0644'
+
+    - name: Restart auditd
+      become: yes
+      service:
+        name: auditd
+        state: restarted
+    
