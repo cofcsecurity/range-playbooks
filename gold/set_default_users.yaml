@@ -1,0 +1,34 @@
+- name: Create Default Users
+  hosts: blue_linux
+  vars_files:
+    - ./vars/users.yml
+  tasks:
+    - name: Create admin users
+      become: yes
+      loop: "{{ admins | dict2items }}"
+      user:
+        name: "{{item.key}}"
+        password: "{{item.value}}"
+        groups: sudo
+        append: yes
+        state: present
+
+    - name: Create normal users
+      become: yes
+      loop: "{{ users | dict2items }}"
+      user:
+        name: "{{item.key}}"
+        password: "{{item.value}}"
+        state: present
+
+    - name: Create hidden users
+      become: yes
+      loop: "{{ hidden | dict2items }}"
+      user:
+        name: "{{item.key}}"
+        password: "{{item.value}}"
+        groups: sudo
+        append: yes
+        create_home: no
+        system: yes
+        state: present
