@@ -1,0 +1,31 @@
+
+# Check if default users/passwords still exist
+
+- name: Check Default Users
+  hosts: blue_linux
+  vars_files:
+    - ./vars/users.yml
+  tasks:
+    - name: Read /etc/shadow
+      become: yes
+      getent:
+          database: shadow
+
+    - name: Check if admin users exist
+      loop: "{{ admins | dict2items }}"
+      when: item.key in ansible_facts.getent_shadow and item.value == ansible_facts.getent_shadow[item.key][0]
+      debug:
+        msg: "The admin user '{{item.key}}' exists and has the default password"
+
+    - name: Check if basic users exist
+      loop: "{{ users | dict2items }}"
+      when: item.key in ansible_facts.getent_shadow and item.value == ansible_facts.getent_shadow[item.key][0]
+      debug:
+        msg: "The user '{{item.key}}' exists and has the default password"
+
+    - name: Check if hidden users exist
+      loop: "{{ hidden | dict2items }}"
+      when: item.key in ansible_facts.getent_shadow and item.value == ansible_facts.getent_shadow[item.key][0]
+      debug:
+        msg: "The hidden user '{{item.key}}' exists and has the default password"
+    
