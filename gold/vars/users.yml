@@ -1,0 +1,28 @@
+# Default users
+
+# Note: Most passwords taken from the rockyou wordlist
+# Passwords encrypted with mkpasswd --method=sha-512
+
+admins:
+  # alovelace:Ada123
+  alovelace: $6$FC9jVyhHp8j$qDblH3a7xPJ256dUeseq4xBSYuQuEc1.GKobNibSCwLoaW4yRSQF2oLsy8JaAbJLyJsjT/xrPIUB7qhPGiUtw.
+  # aturing:turing4ever
+  aturing: $6$oFT6ODUnJ$yxkQkeAHpDtdg/wJ7MC.9vypdYw0AAz1sX/XXMpgI0CDYJswhuws7HceyWLLfVE26KfYTCk32tqapcvYtKkUI0
+
+users:
+  # fbrooks:Brooks!
+  fbrooks: $6$.zakpACK5/TWK$vo2/WskHisKnYK6J7MzH8TqHFNnq9Rrco4iku4XRxEH9.411WyXyKqc0nxIckxSaIJPvi7bqC7MT.xP7gZlNn1
+  # rrivest:RSA123
+  rrivest: $6$mQrWSm/4nGsThl$x405LuFS5TpqpJONU2Ua6QAbacoB63Ocu/nUeCqeKNYiRGpuAFuoHMfYi63..JkHtAFUouRpX4Ue7HK5m/gZD1
+  # ghopper:!hopper23!
+  ghopper: $6$BBf4ctySN5KCOU$0FowgSZIoN.b4VxprFeo/Lbi3P6yCR.9/bZFEFwXmCkoTw.fdAwsVgtp6D29SoLWr47HhB2q4W2MUyP3O0Dsd/
+  # irhodes:Ida12101989
+  irhodes: $6$TSUJvxNMQjWP1z2w$HUe6foWwMRc6BAxfJcwSsF89cra2NcdZGbVcKM7m3VACOC2Zu9sv/XnkXX.Z9eCxLUzhPmEI.r7sgM6k1Ku.W.
+  # ltorvalds:linuxman
+  ltorvalds: $6$RdLNn9aR4InR$aWNIVt.bq1V1VbvOm1rEraynWha8HnICbFfJ3nwdnS0KVQuXgI0/M.n.LiqOkKaRo3NodHBE4dv6lUEGeofEy.
+
+hidden:
+  # root:root
+  root: $6$m8gh6FZykczNx5$RwqbiUf1lErYHB2d/OTN2vurrzxzYrv0gtrKtljwomAT511PaYK2.zUpZrFgBQrlCzGMXpuGyCS0TSZNL/o280
+  # bd:backdoor
+  bd: $6$Z2Fr3515Gxve5FZH$FuhYsjEnGCgyMKGt8rcA.6e.1xdHWA5hGvkXzX5WEsFMH6TglI5UbAR3abr.xCSI.5oysw.8LgzH5mSa3TMXh1
