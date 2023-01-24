@@ -1,0 +1,35 @@
+- name: Install Golang
+  hosts: all
+  tasks:
+    - name: Create tmp directory to work in
+      file:
+        path: /tmp/golang
+        state: directory
+
+    - name: Download Golang
+      become: yes
+      get_url:
+        url: https://go.dev/dl/go1.19.5.linux-amd64.tar.gz
+        dest: /tmp/golang/go1.19.5.linux-amd64.tar.gz
+        mode: '0700'
+
+    - name: Remove previous install
+      become: yes
+      command: rm -rf /usr/local/go
+
+    - name: Install Golang
+      become: yes
+      command: tar -C /usr/local -xzf go1.19.5.linux-amd64.tar.gz
+      args:
+        chdir: /tmp/golang
+
+    - name: Add Golang to the PATH systemwide
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        line: export PATH=$PATH:/usr/local/go/bin
+
+    - name: Delete tmp directory
+      file:
+        path: /tmp/golang
+        state: absent
+   
