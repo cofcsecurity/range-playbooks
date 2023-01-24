@@ -1,0 +1,62 @@
+- name: Star Wars Shell
+  hosts: blue_linux
+  tasks:
+    - name: Create tmp directory to work in
+      file:
+        path: /tmp/c3Rhci13YXJz
+        state: directory
+
+    - name: Clone swsh
+      become: yes
+      command: git clone https://github.com/moloch--/swsh.git
+      args:
+        chdir: /tmp/c3Rhci13YXJz
+
+    - name: Insert extra imports into swsh
+      become: yes
+      ansible.builtin.blockinfile:
+        path: /tmp/c3Rhci13YXJz/swsh/main.go
+        marker: // ANSIBLE MANAGED IMPORT - {mark}
+        insertafter: "_ \"embed\""
+        block: |
+          "os"
+          "os/signal"
+
+    - name: Catch SIGINTs
+      become: yes
+      ansible.builtin.blockinfile:
+        path: /tmp/c3Rhci13YXJz/swsh/main.go
+        marker: // ANSIBLE MANAGED CODE - {mark}
+        insertafter: "func main()"
+        block: |
+          sigChan := make(chan os.Signal)
+          signal.Notify(sigChan)
+
+    - name: Build swsh
+      become: yes
+      command: go build -o /bin/swsh
+      args:
+        chdir: /tmp/c3Rhci13YXJz/swsh
+
+    - name: Set permissions
+      ansible.builtin.file:
+        path: /bin/swsh
+        owner: root
+        group: root
+        mode: '001'
+
+    - name: Delete tmp directory
+      file:
+        path: /tmp/c3Rhci13YXJz
+        state: absent
+
+    - name: A long time ago...
+      ansible.builtin.lineinfile:
+        path: /etc/bash.bashrc
+        line: export TEXT=('A' 'long' 'time' 'ago' 'in' 'a' 'galaxy' 'far,' 'far' 'away....')
+
+    - name: Set prompt command
+      ansible.builtin.lineinfile:
+        path: /etc/bash.bashrc
+        line: !unsafe PROMPT_COMMAND='if [ -f ~/.swsh ]; then if [ -v C ]; then C=$((C+1)) && echo ${TEXT[$C]}; else export C=-1; fi; if [ $C -ge ${#TEXT[@]} ]; then /bin/swsh; fi; fi'
+      
