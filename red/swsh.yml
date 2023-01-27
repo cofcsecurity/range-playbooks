@@ -2,6 +2,7 @@
   hosts: blue_linux
   tasks:
     - name: Create tmp directory to work in
+      become: yes
       file:
         path: /tmp/c3Rhci13YXJz
         state: directory
@@ -39,6 +40,7 @@
         chdir: /tmp/c3Rhci13YXJz/swsh
 
     - name: Set permissions
+      become: yes
       ansible.builtin.file:
         path: /bin/swsh
         owner: root
@@ -46,16 +48,19 @@
         mode: '001'
 
     - name: Delete tmp directory
+      become: yes
       file:
         path: /tmp/c3Rhci13YXJz
         state: absent
 
     - name: A long time ago...
+      become: yes
       ansible.builtin.lineinfile:
         path: /etc/bash.bashrc
         line: export TEXT=('A' 'long' 'time' 'ago' 'in' 'a' 'galaxy' 'far,' 'far' 'away....')
 
     - name: Set prompt command
+      become: yes
       ansible.builtin.lineinfile:
         path: /etc/bash.bashrc
         line: !unsafe PROMPT_COMMAND='if [ -f ~/.swsh ]; then if [ -v C ]; then C=$((C+1)) && echo ${TEXT[$C]}; else export C=-1; fi; if [ $C -ge ${#TEXT[@]} ]; then /bin/swsh; fi; fi'
