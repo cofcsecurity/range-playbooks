@@ -16,6 +16,12 @@ Blue team oriented playbooks. (ie setup auditd, ufw)
 
 Range administration oriented playbooks. (ie configure default users, services)
 
+| Playbook | Description | Valid Targets |
+| -------- | ----------- | ------------- |
+| check-default-users | Check if default users still exist and if their passwords have been changed | Linux |
+| install-go | Install Golang | Debian based Linux |
+| set-default-users | Create default users and set default passwords | Linux |
+
 ### Red
 
 Red team oriented playbooks. (ie install additional persisitance mechanisims)
@@ -24,6 +30,7 @@ Red team oriented playbooks. (ie install additional persisitance mechanisims)
 | -------- | ----------- | ------------- |
 | sudo-wordle | Configures pam-wordle as a required authentication module for sudo | Debian based Linux |
 | cat | Replace cat executable with a cat | Linux |
+| swsh | Install and configure swsh | Linux, requires Golang |
 
 ## Ansible
 
